@@ -14,6 +14,7 @@ if (isset($_GET['id'])) {
     $stmt->bindParam(':id', $id);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    print_r($result);
     $name = $result['name'];
     $tel = $result['tel'];
 }
@@ -31,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->execute();
 
-    echo $stmt->rowCount() . " record UPDATED!";
+    echo $stmt->rowCount() . " record updated!";
 }
 
 ?>
