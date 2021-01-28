@@ -24,8 +24,8 @@
         </div>
 
         <div class="col-lg-2 mt-2">
-            <form action="restore-database.php" method="post" class="mb-2">
-                <input type="submit" class="form-control mt-2 btn btn-outline-danger" value="Återställ databasen!">
+            <form action="restore.php" method="post" class="mb-2">
+                <input type="submit" class="form-control mt-2 btn btn-outline-danger" value="Återställ">
             </form>
         </div>
 

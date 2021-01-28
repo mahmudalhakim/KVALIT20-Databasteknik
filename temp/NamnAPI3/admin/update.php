@@ -2,65 +2,58 @@
 
 /***************************************************************
  *
- *  Uppatera ett namn
+ *                     Uppatera ett namn
  *
  ***************************************************************/
 
 require_once 'header.php';
 require_once '../database/db.php';
 
-if (isset($_GET['id']) && isset($_GET['table'])) {
-    $id =  $_GET['id'];
-    $tableName =  $_GET['table'];
-    $sql = "SELECT * FROM $tableName WHERE id = :id";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $name = $result[$tableName];
+if (isset($_GET['name']) && isset($_GET['table'])) {
+    $oldName =  $_GET['name'];
+    $table   =  $_GET['table'];
 }
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $id  = $_POST['id'];
-    $name = $_POST['name'];
+    $newName = $_POST['newName'];
     $oldName = $_POST['oldName'];
+    $table  = $_POST['table'];
 
-    $stmt = $conn->prepare("UPDATE $tableName SET $tableName = :name WHERE id = :id");
-    $stmt->bindParam(':id', $id);
-    $stmt->bindParam(':name', $name);
+    $stmt = $conn->prepare("UPDATE $table SET $table = :newName WHERE $table = :oldName");
+    $stmt->bindParam(':newName', $newName);
+    $stmt->bindParam(':oldName', $oldName);
 
     $stmt->execute();
-    printMessage("$oldName har uppdaterats till $name", "success");
+
+    printMessage("$oldName har uppdaterats till $newName", "success");
+    $oldName = $newName;
 
 }
-
 ?>
 
 <form action="#" method="post" class="row">
 
     <div class="col-md-6 offset-md-3  mt-2">
-        <input type="text" name="name" class="form-control mt-2" value="<?php echo $name ?>" placeholder="Ange namn">
+        <input type="text"   name="newName" class="form-control mt-2" value="<?php echo $oldName ?>">
+        <input type="hidden" name="oldName" value="<?php echo $oldName ?>">
+        <input type="hidden" name="table" value="<?php echo $table ?>">
     </div>
 
     <div class="col-md-6 offset-md-3  mt-2">
         <input type="submit" class="form-control mt-2 btn btn-primary" value="Uppdatera">
     </div>
 
-    <input type="hidden" name="id" value="<?php echo $id ?>">
-    <input type="hidden" name="oldName" value="<?php echo $name ?>">
-
 </form>
 
 <form action="delete.php" method="post" class="row">
 
     <div class="col-md-6 offset-md-3  mt-2">
+        <input type="hidden" name="table" value="<?php echo $table ?>">
+        <input type="hidden" name="name" value="<?php echo $oldName ?>">
         <input type="submit" class="form-control mt-2 btn btn-outline-danger" value="Ta bort">
     </div>
-
-    <input type="hidden" name="id" value="<?php echo $id ?>">
-    <input type="hidden" name="table" value="<?php echo $tableName ?>">
-    <input type="hidden" name="name" value="<?php echo $name ?>">
 
 </form>
 

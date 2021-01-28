@@ -2,8 +2,8 @@
 
 /***************************************************************
  *
- *  NamnAPI Adminpanel
- *  Skapa nya namn via ett formulär
+ *                     NamnAPI Adminpanel
+ *               Skapa nya namn via ett formulär
  *
  ***************************************************************/
 
@@ -14,41 +14,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST['firstname']) && empty($_POST['lastname']))
         printMessage("Ange förnamn eller efternamn tack", "warning");
 
-    if (!empty($_POST['firstname']))
-        processFirstname($conn, $_POST['firstname'], $_POST['gender']);
-
     if (!empty($_POST['lastname']))
-        processLastname($conn, $_POST['lastname']);
-}
+        processLastname($_POST['lastname']);
 
+    if (!empty($_POST['firstname']))
+        processFirstname($_POST['firstname'], $_POST['gender']);
+
+}
 
 /**
  * 
  */
-function processFirstname($conn, $firstname, $gender)
+function processLastname($lastname)
+{
+    // Rensa strängen och gör nödvändiga tester
+    insertInto("lastNames", $lastname);
+}
+
+/**
+ * 
+ */
+function processFirstname($firstname, $gender)
 {
     if ($gender == "male")
-        insertInto($conn, "firstNamesMale", $firstname);
+        insertInto("firstNamesMale", $firstname);
     else if ($gender == "female")
-        insertInto($conn, "firstNamesFemale", $firstname);
+        insertInto("firstNamesFemale", $firstname);
     else
         printMessage("Välj kön tack!" , "warning");
 }
 
 
-/**
- * 
- */
-function processLastname($conn, $lastname)
-{
-        insertInto($conn, "lastNames", $lastname);
-}
+
 
 /**
  * En funktion som testar om ett namn finns redan i en tabell
  */
-function nameExists($conn, $table, $name)
+
+function nameExists($table, $name)
 {
+    global $conn; // från db.php
+
     $stmt = $conn->prepare("SELECT * FROM $table WHERE $table = :name");
     $stmt->bindParam(':name', $name);
     $stmt->execute();
@@ -59,20 +65,23 @@ function nameExists($conn, $table, $name)
     return false;
 }
 
+
 /**
  * En funktion som lägger till ett namn i en tabell
  */
-function insertInto($conn, $table, $name)
+function insertInto($table, $name)
 {
-    if (nameExists($conn, $table, $name))
-        return;
 
-    $sql = "INSERT INTO $table VALUES (NULL, :name)";
+    if(nameExists($table, $name))
+        return;
+    
+    global $conn;
+
+    $sql = "INSERT INTO $table VALUES (:name)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':name', $name);
     $stmt->execute();
-    $last_id = $conn->lastInsertId();
-    printMessage("$name inserted successfully.<br>Last inserted ID is: " . $last_id, "success");
+    printMessage("$name inserted successfully.", "success");
 }
 
 

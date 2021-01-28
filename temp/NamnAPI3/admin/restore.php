@@ -9,7 +9,8 @@ require_once 'header.php';
     <h2>DANGER ZONE</h2>
     <h3>Du håller på att ÅTERSTÄLLA en hel databas!</h3>
     <h4>Vill du verkligen gå vidare? <br>
-        Skirv <span class="text-danger">ditt lösenord</span> här nedan och klicka på knappen</h4>
+        Skirv ditt lösenord här nedan och klicka på knappen
+    </h4>
 
     <form action="#" method="post">
         <input type="password" name="confirm" class="form-control" required  autofocus>

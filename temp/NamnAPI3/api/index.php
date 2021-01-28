@@ -15,34 +15,11 @@
  */
 
 
-// 2. Skapa en webbsida för att lägga till flera namn i databasen
-// 3. Se till att inte lägga in dubbletter i databassen!
-
 header("Content-Type: application/json; charset=UTF-8");
-include('Name.php');
 
-
-/**
- * Get data from a table
- * Returns Assoc. Array
- */
-function getArrayFromTable($conn, $table){
-    $stmt = $conn->prepare("SELECT * FROM $table ");
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    return $result;
-}
-
-try {
-    include_once "../database/db.php";
-    $firstNamesMale = getArrayFromTable($conn, "firstNamesMale");
-    $firstNamesFemale = getArrayFromTable($conn, "firstNamesFemale");
-    $lastNames = getArrayFromTable($conn, "lastNames");
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-    exit();
-}
-
+include_once("Name.php");
+include_once("../database/db.php");
+include_once("../database/fetch-data.php");
 
 // $limit = getLimit(1, 100);
 

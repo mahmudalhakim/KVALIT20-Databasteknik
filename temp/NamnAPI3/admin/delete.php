@@ -11,13 +11,12 @@ require_once '../database/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $id  = $_POST['id'];
+    $name  = $_POST['name'];
     $table = $_POST['table'];
-    $name = $_POST['name'];
-    $stmt = $conn->prepare("DELETE FROM $table WHERE  id = :id");
-    $stmt->bindParam(':id', $id);
+    $stmt = $conn->prepare("DELETE FROM $table WHERE $table = :name");
+    $stmt->bindParam(':name', $name);
     $stmt->execute();
     printMessage("$name har tagits bort!", "danger");
-    
 }
+
 require_once 'footer.php';
