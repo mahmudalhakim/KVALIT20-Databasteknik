@@ -4,6 +4,10 @@
  * NamnAPI V.3 (med en databas)
  * En egenutvecklad version av https://namnapi.se/
  * 
+ * Begränsningar
+ * APIet skapar enbart 10 olika namn!
+ * Data levereras enbart i JSON-format (ej XML)
+ * 
  * Date: 2021-01-26
  * Copyright: MIT
  * Contact: Mahmud Al Hakim
@@ -11,23 +15,26 @@
  */
 
 
-// Övningar
-// 1. Använd en databas istället för arrayer i vårt NamnAPI
 // 2. Skapa en webbsida för att lägga till flera namn i databasen
 // 3. Se till att inte lägga in dubbletter i databassen!
 
-// Lösning
-
 header("Content-Type: application/json; charset=UTF-8");
 include('Name.php');
-// include('namesArrays.php');
+
+
+/**
+ * Get data from a table
+ * Returns Assoc. Array
+ */
+function getArrayFromTable($conn, $table){
+    $stmt = $conn->prepare("SELECT * FROM $table ");
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result;
+}
 
 try {
-    $dbFile = "../database/db.php";
-    if (!file_exists($dbFile))
-        throw new \Exception("$dbFile does not exist");
-    include_once $dbFile;
-
+    include_once "../database/db.php";
     $firstNamesMale = getArrayFromTable($conn, "firstNamesMale");
     $firstNamesFemale = getArrayFromTable($conn, "firstNamesFemale");
     $lastNames = getArrayFromTable($conn, "lastNames");
@@ -37,48 +44,53 @@ try {
 }
 
 
-$limit = getLimit(1, 100);
+// $limit = getLimit(1, 100);
 
 $names = array();
 
-while (count($names) < $limit) {
+while (count($names) < 10) {
 
     if (rand(0, 1) == 0) {
-
         $name = new Name(
             $firstNamesMale[rand(0, count($firstNamesMale) - 1)]['firstNamesMale'],
             $lastNames[rand(0, count($lastNames) - 1)]['lastNames'],
             'male'
         );
     } else {
-
         $name = new Name(
             $firstNamesFemale[rand(0, count($firstNamesFemale) - 1)]['firstNamesFemale'],
             $lastNames[rand(0, count($lastNames) - 1)]['lastNames'],
             'female'
         );
     }
-
     array_push($names, $name->toArray());
 }
-
-shuffle($names);
 
 echo json_encode($names, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 
-/**
- * Get data from a table
- * Returns Assoc. Array
- */
-function getArrayFromTable($conn, $table)
-{
-    $stmt = $conn->prepare("SELECT * FROM $table ");
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    //print_r($result);
-    return $result;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Test and retrun limit between min and max
