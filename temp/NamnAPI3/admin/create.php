@@ -9,17 +9,19 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // print_r($_POST); exit();
-
     if (empty($_POST['firstname']) && empty($_POST['lastname']))
         printMessage("Ange förnamn eller efternamn tack", "warning");
 
-    if (!empty($_POST['lastname']))
-        processLastname($_POST['lastname']);
+    if (!empty($_POST['lastname'])) {
+        $lastname = sanitize($_POST['lastname']);
+        processLastname($lastname);
+    }
 
-    if (!empty($_POST['firstname']))
-        processFirstname($_POST['firstname'], $_POST['gender']);
-
+    if (!empty($_POST['firstname'])) {
+        $lastname = sanitize($_POST['firstname']);
+        $gender = sanitize($_POST['gender']);
+        processFirstname($lastname, $gender);
+    }
 }
 
 /**
@@ -27,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  */
 function processLastname($lastname)
 {
-    // Rensa strängen och gör nödvändiga tester
     insertInto("lastNames", $lastname);
 }
 
@@ -41,7 +42,7 @@ function processFirstname($firstname, $gender)
     else if ($gender == "female")
         insertInto("firstNamesFemale", $firstname);
     else
-        printMessage("Välj kön tack!" , "warning");
+        printMessage("Välj kön tack!", "warning");
 }
 
 
@@ -55,9 +56,11 @@ function nameExists($table, $name)
 {
     global $conn; // från db.php
 
-    $stmt = $conn->prepare("SELECT * FROM $table WHERE $table = :name");
-    $stmt->bindParam(':name', $name);
-    $stmt->execute();
+    $sql = "SELECT * FROM $table WHERE $table = :name";
+    $stmt = $conn->prepare($sql);
+    $parameters = array(':name' => $name);
+    //https://www.php.net/manual/en/pdostatement.execute
+    $stmt->execute($parameters); 
     if ($stmt->rowCount() > 0) {
         printMessage("$name finns redan i databasen!", "warning");
         return true;
@@ -72,15 +75,17 @@ function nameExists($table, $name)
 function insertInto($table, $name)
 {
 
-    if(nameExists($table, $name))
+    if (nameExists($table, $name))
         return;
-    
-    global $conn;
+
+    global $conn; // från db.php
 
     $sql = "INSERT INTO $table VALUES (:name)";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':name', $name);
-    $stmt->execute();
+    $parameters = array(':name' => $name);
+    //https://www.php.net/manual/en/pdostatement.execute
+    $stmt->execute($parameters);
+    
     printMessage("$name inserted successfully.", "success");
 }
 

@@ -1,3 +1,10 @@
+<?php
+
+require_once ("../database/db.php");
+require_once ("functions.php");
+
+?>
+
 <!doctype html>
 <html lang="sv">
 
@@ -34,19 +41,3 @@
         </div>
 
     </div>
-
-    <?php
-
-    /**
-     * En funktion som skriver ut ett felmeddelande
-     * $messageType enligt Bootstrap Alerts
-     * https://getbootstrap.com/docs/5.0/components/alerts/
-     */
-    function printMessage($message, $messageType = "danger")
-    {
-        echo "
-        <div class='my-2 col-md-6 offset-md-3 alert alert-$messageType alert-dismissible fade show' role='alert'>
-            $message
-            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-        </div>";
-    }
