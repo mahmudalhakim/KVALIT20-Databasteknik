@@ -21,10 +21,10 @@ class Database
     private $conn = null;
 
     // this function is called everytime this class is instantiated		
-    public function __construct($dbhost, $dbname, $username, $password)
+    public function __construct($dbhost, $dbname, $username, $password, $port = "80")
     {
         try {
-            $this->conn = new PDO("mysql:host={$dbhost};dbname={$dbname};", $username, $password);
+            $this->conn = new PDO("mysql:host={$dbhost};dbname={$dbname};port={$port};charset=utf8", $username, $password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (Exception $e) {
