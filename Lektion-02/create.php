@@ -12,9 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once ("database.php");
 
     // Test att skriva ut arrayen med formulärdata
-    echo "<pre>";
+    // echo "<pre>";
     // print_r($_POST);
-    echo "</pre>";
+    // echo "</pre>";
 
     $name = $_POST['name'];
     $tel = $_POST['tel'];
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <div class="col-md-4 my-2">
-    <input type="submit" value="Lägg till" class="form-control btn btn-outline-info">
+    <input type="submit" value="Lägg till" class="form-control btn btn-outline-dark">
 </div>
 
 </form>
