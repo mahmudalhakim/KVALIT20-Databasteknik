@@ -1,7 +1,6 @@
 -- phpMyAdmin SQL Dump
 -- version 4.9.7
 -- https://www.phpmyadmin.net/
---
 -- Värd: localhost:3306
 -- Tid vid skapande: 03 feb 2021 kl 08:29
 -- Serverversion: 5.7.32
