@@ -1,5 +1,8 @@
 <?php
 
+// Viktigt att läsa om "Dependency Injection"
+// https://codeinphp.github.io/post/dependency-injection-in-php/
+
 class Controller
 {
     private $model = null;
@@ -13,7 +16,7 @@ class Controller
 
     public function getHeader()
     {
-        $this->view->viewHeader();
+        $this->view->viewHeader("Videobutiken");
     }
 
     public function getFooter()
@@ -23,7 +26,8 @@ class Controller
 
     public function getFilms()
     {
-        $this->model->fetchAllFilms();
+        $films = $this->model->fetchAllFilms();
+        $this->view->viewFilms($films);
     }
 
     public function getOrderForm()
@@ -32,6 +36,7 @@ class Controller
         $film = $this->model->fetchFilmById($id);
 
         if ($film) {
+            $this->view->viewFilm($film);
             $this->view->viewOrderForm($film);
         } else {
             header("Location:index.php");
@@ -42,7 +47,15 @@ class Controller
     {
         $film_id     = $this->sanitize($_POST['film_id']);
         $customer_id = $this->sanitize($_POST['customer_id']);
-        $this->model->saveOrder($customer_id, $film_id);
+        $confirm = $this->model->saveOrder($customer_id, $film_id);
+
+        if ($confirm) {
+            $customer = $confirm['customer'];
+            $lastInsertId = $confirm['lastInsertId'];
+            $this->view->viewConfirmMessage($customer, $lastInsertId);
+        } else {
+            $this->view->viewErrorMessage($customer_id);
+        }
     }
 
 

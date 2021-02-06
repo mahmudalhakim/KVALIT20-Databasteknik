@@ -6,21 +6,21 @@
 class View
 {
 
-    public function viewHeader()
+    public function viewHeader($title)
     {
         $html = <<<HTML
             <!doctype html>
             <html lang="sv">
             <head>
             <meta charset="utf-8">
-            <title>Videobutiken</title>
+            <title>$title</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" href="styles/bootstrap.css">
             <link rel="stylesheet" href="styles/styles.css">
             </head>
             <body class="container">
             <h1 class="text-center">
-            <a href="index.php">Videobutiken</a>
+            <a href="index.php">$title</a>
             </h1>
             <div class='row'>
 
@@ -31,9 +31,15 @@ class View
 
     public function viewFooter()
     {
+        $date = date('Y');
+
         $html = <<<HTML
 
             </div> <!-- row -->
+            <footer>
+            <hr>
+            <p class="text-center text-muted">Copyright &copy; $date</p>
+            </footer>
             </body>
             </html>
         HTML;
@@ -65,6 +71,13 @@ class View
         echo $html;
     }
 
+    public function viewFilms($films)
+    {
+        foreach ($films as $key => $film) {
+            $this->viewFilm($film);
+        }
+    }
+
     public function viewOrderForm($film)
     {
 
@@ -89,6 +102,28 @@ class View
         HTML;
 
         echo $html;
+    }
+
+    public function viewConfirmMessage($customer, $lastInsertId)
+    {
+        $this->printMessage(
+            "<h4>Tack $customer[name]</h4>
+            <p>Vi kommer att skicka filmen till följande e-post:</p>
+            <p>$customer[email]</p>
+            <p>Ditt ordernummer är $lastInsertId </p>
+            ",
+            "success"
+        );
+    }
+
+    public function viewErrorMessage($customer_id)
+    {
+        $this->printMessage(
+            "<h4>Kundnummer $customer_id finns ej i vårt kundregister!</h4>
+                <h5>Kontakta kundtjänst</h5>
+                ",
+            "warning"
+        );
     }
 
     /**
