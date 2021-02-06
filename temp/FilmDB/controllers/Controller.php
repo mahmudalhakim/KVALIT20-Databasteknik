@@ -14,6 +14,13 @@ class Controller
         $this->view = $view;
     }
 
+    public function run()
+    {
+        $this->getHeader();
+        $this->getFilms();
+        $this->getFooter();
+    }
+
     public function getHeader()
     {
         $this->view->viewHeader("Videobutiken");

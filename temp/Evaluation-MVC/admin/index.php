@@ -2,10 +2,10 @@
 
 /**********************************************
  *       
- *        En Databasbaserad Applikation
+ *        Kursutvärdering
  *        -----------------------------
  * Utvecklare: Mahmud Al Hakim
- * Datum: 2021-02-02
+ * Datum: 2021-02-06
  * Copyright: MIT
  * GitHub: https://github.com/mahmudalhakim  
  *       
