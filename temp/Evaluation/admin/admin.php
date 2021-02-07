@@ -40,7 +40,7 @@ $courses = $stmt->fetchAll();
 
 if (isset($_GET['course'])) {
 
-    $course_id = $_GET['course'];
+    $course_id = htmlspecialchars( $_GET['course'] );
 
     // Hämta kursen från databasen
     $stmt = $conn->prepare("SELECT * FROM courses WHERE course_id = :course_id");
@@ -61,11 +61,11 @@ if (isset($_GET['course'])) {
 
         // Hämta alla svar
         $stmt = $conn->prepare("SELECT * FROM courses, surveys, answers, students
-        WHERE answers.survey_id = surveys.survey_id
-        AND courses.course_id = surveys.course
-        AND students.student_id = surveys.student
-        AND answers.question_id = :question_id
-        AND courses.course_id = :course_id");
+                                WHERE answers.survey_id = surveys.survey_id
+                                AND courses.course_id = surveys.course
+                                AND students.student_id = surveys.student
+                                AND answers.question_id = :question_id
+                                AND courses.course_id = :course_id");
         $stmt->bindParam(':question_id', $question_id);
         $stmt->bindParam(':course_id', $course_id);
         $stmt->execute();
