@@ -1,24 +1,25 @@
 <?php
 
 /**
- * NamnAPI V.3 (med en databas)
+ * NamnAPI med en databas
  * En egenutvecklad version av https://namnapi.se/
  * 
  * Begränsningar
- * APIet skapar enbart 10 olika namn!
- * Data levereras enbart i JSON-format (ej XML)
+ *  - APIet skapar enbart 10 olika namn!
+ *  - Data levereras enbart i JSON-format (ej XML)
  * 
- * Date: 2021-02-02
+ * Date: 2021-02-10
  * Copyright: MIT
  * Contact: Mahmud Al Hakim
  * https://github.com/mahmudalhakim/
+ * 
  */
 
 
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once("Name.php");
-include_once("../database/fetch-data.php");
+include_once("fetch-data.php");
 
 $names = array();
 

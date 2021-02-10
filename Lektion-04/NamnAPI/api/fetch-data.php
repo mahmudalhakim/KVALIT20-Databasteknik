@@ -1,14 +1,16 @@
 <?php
 
-require_once("db.php");
+require_once("../database/database.php");
+$conn->exec("USE $dbName");
 
 /**
  * Get data from a table
  * Returns Assoc. Array
  */
 
-function getArrayFromTable($table){
-       
+function getArrayFromTable($table)
+{
+
     global $conn; // Hämtas från db.php
     $stmt = $conn->prepare("SELECT * FROM $table ");
     $stmt->execute();
