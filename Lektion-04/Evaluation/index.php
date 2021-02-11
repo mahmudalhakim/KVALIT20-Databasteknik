@@ -66,15 +66,20 @@
     // Hantera formuläret
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        $student_name = empty($_POST['name']) ?  "Anonym" : htmlspecialchars($_POST['name']);
         $course_id    = htmlspecialchars($_POST['course']);
         $answers      = $_POST['answers']; // en array som innehåller alla svar
 
-        // Skapa en ny student
-        $stmt = $conn->prepare("INSERT INTO students (name) VALUES (:name)");
-        $stmt->bindParam(':name', $student_name);
-        $stmt->execute();
-        $student_id = $conn->lastInsertId();
+        if(!empty($_POST['name'])){
+            // Skapa en ny student
+            $student_name = htmlspecialchars($_POST['name']);
+            $stmt = $conn->prepare("INSERT INTO students (name) VALUES (:name)");
+            $stmt->bindParam(':name', $student_name);
+            $stmt->execute();
+            $student_id = $conn->lastInsertId();
+        }
+        else{
+            $student_id = NULL; // Anonym student
+        }
 
         // Skapa en ny utvärdering
         $stmt = $conn->prepare("INSERT INTO surveys (course, student) 
@@ -87,7 +92,7 @@
         // Infoga alla svar 
         foreach ($answers as $question_id => $answer) {
             $stmt = $conn->prepare("INSERT INTO answers (survey_id, question_id, answer) 
-                            VALUES (:survey_id, :question_id, :answer )");
+                                    VALUES (:survey_id, :question_id, :answer )");
             $stmt->bindParam(':survey_id', $survey_id);
             $stmt->bindParam(':question_id', $question_id);
             $stmt->bindParam(':answer', $answer);

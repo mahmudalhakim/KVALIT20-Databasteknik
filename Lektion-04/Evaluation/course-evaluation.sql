@@ -148,7 +148,7 @@ INSERT INTO `students` (`student_id`, `name`) VALUES
 CREATE TABLE `surveys` (
   `survey_id` int(11) NOT NULL,
   `course` int(11) NOT NULL,
-  `student` int(11) NOT NULL
+  `student` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
