@@ -92,9 +92,11 @@ class View
 
         foreach ($answers as $key => $answer) {
 
+            $student = empty($answer['name']) ? "<i>Anonym Student</i>" : $answer['name'];
+
             $html .= "
             <tr>
-                <td width='200'>$answer[name]</td>
+                <td width='200'>$student</td>
                 <td>$answer[answer]</td>
             </tr>
             ";

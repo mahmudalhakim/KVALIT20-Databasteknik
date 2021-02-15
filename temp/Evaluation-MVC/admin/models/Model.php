@@ -39,13 +39,13 @@ class Model
     public function fetchAnswers($course_id, $question_id)
     {
 
-        $statement = "  SELECT * FROM courses, surveys, answers, students
-                        WHERE answers.survey_id = surveys.survey_id
-                        AND courses.course_id   = surveys.course
-                        AND students.student_id = surveys.student
-                        AND courses.course_id   = :course_id
+        $statement = "  SELECT * FROM surveys
+                        INNER JOIN  answers ON answers.survey_id = surveys.survey_id
+                        INNER JOIN  courses ON courses.course_id = surveys.course
+                        LEFT JOIN  students ON surveys.student = students.student_id
+                        WHERE courses.course_id = :course_id
                         AND answers.question_id = :question_id
-                        ";
+                    ";
         $parameters = array(':course_id' => $course_id, ':question_id' => $question_id);
         $answers = $this->db->select($statement, $parameters);
 
