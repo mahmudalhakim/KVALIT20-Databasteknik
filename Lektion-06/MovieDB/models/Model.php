@@ -13,24 +13,29 @@ class Model
         $this->db = $database;
     }
 
+    public function fetchAllFilms()
+    {
+        $films = $this->db->select("SELECT * FROM films");
+        return $films;
+    }
+    
     public function fetchFilmById($id)
     {
         $statement = "SELECT * FROM films WHERE film_id=:id";
         $parameters = array(':id' => $id);
         $film = $this->db->select($statement, $parameters);
 
+        // print_r($film);
+
         if ($film) {
+            
             return $film[0];
         }
 
         return false;
     }
 
-    public function fetchAllFilms()
-    {
-        $films = $this->db->select("SELECT * FROM films");
-        return $films;
-    }
+   
 
     public function fetchCustomerById($id)
     {

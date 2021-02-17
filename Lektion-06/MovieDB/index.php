@@ -16,9 +16,9 @@ require_once("models/Model.php");
 require_once("views/View.php");
 require_once("controllers/Controller.php");
 
-$db = new Database("localhost", "moviedb", "root", "root");
-$view = new View();
-$model = new Model($db, $view);
-$controller = new Controller($model, $view);
+$database   = new Database("localhost", "moviedb", "root", "root");
+$model      = new Model($database);          // Dependency Injection
+$view       = new View();
+$controller = new Controller($model, $view); // Dependency Injection
 
 $controller->main();

@@ -7,7 +7,7 @@
 class Controller
 {
     private $model = null;
-    private $view = null;
+    private $view  = null;
 
     public function __construct($model, $view)
     {
@@ -43,6 +43,10 @@ class Controller
         $films = $this->model->fetchAllFilms();
         $this->view->viewFilms($films);
     }
+
+
+
+    
 
     public function getOrderForm()
     {

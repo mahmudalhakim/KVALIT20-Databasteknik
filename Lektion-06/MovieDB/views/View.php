@@ -55,7 +55,7 @@ class View
                 <a href="?id=$film[film_id]">
                     <div class="card m-1">
                         <img class="card-img-top" src="images/$film[image]" 
-                            alt="$film[title]">
+                             alt="$film[title]">
                         <div class="card-body">
                             <div class="card-title text-center">
                                 <h4>$film[title]</h4>
@@ -71,12 +71,17 @@ class View
         echo $html;
     }
 
+
     public function viewFilms($films)
     {
         foreach ($films as $key => $film) {
             $this->viewFilm($film);
         }
     }
+
+
+
+
 
     public function viewOrderForm($film)
     {
