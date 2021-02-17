@@ -36,9 +36,9 @@ class View
         $html = <<<HTML
 
             </div> <!-- row -->
-            <footer>
+            <footer class="text-center text-muted">
             <hr>
-            <p class="text-center text-muted">Copyright &copy; $date</p>
+            <p>Copyright &copy; $date</p>
             </footer>
             </body>
             </html>
@@ -52,7 +52,7 @@ class View
         $html = <<<HTML
 
             <div class="col-md-6">
-                <a href="order.php?id=$film[film_id]">
+                <a href="?id=$film[film_id]">
                     <div class="card m-1">
                         <img class="card-img-top" src="images/$film[image]" 
                             alt="$film[title]">
@@ -97,6 +97,7 @@ class View
                     <input type="submit" class="form-control my-2 btn btn-lg btn-outline-success" 
                             value="Skicka beställningen">
                 </form>
+                
             <!-- col avslutas efter en alert -->
 
         HTML;

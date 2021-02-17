@@ -1,6 +1,7 @@
 <?php
 
-// Viktigt att läsa om "Dependency Injection"
+// Tips
+// Bra att läsa om "Dependency Injection"
 // https://codeinphp.github.io/post/dependency-injection-in-php/
 
 class Model

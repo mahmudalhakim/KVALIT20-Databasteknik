@@ -1,6 +1,7 @@
 <?php
 
-// Viktigt att läsa om "Dependency Injection"
+// Tips
+// Bra att läsa om "Dependency Injection"
 // https://codeinphp.github.io/post/dependency-injection-in-php/
 
 class Controller
@@ -14,10 +15,16 @@ class Controller
         $this->view = $view;
     }
 
-    public function run()
+    public function main()
     {
         $this->getHeader();
-        $this->getFilms();
+
+        if (!isset($_GET['id'])) {
+            $this->getFilms();
+        } else {
+            $this->getOrderForm();
+        }
+
         $this->getFooter();
     }
 
@@ -47,6 +54,10 @@ class Controller
             $this->view->viewOrderForm($film);
         } else {
             header("Location:index.php");
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->processOrderForm();
         }
     }
 

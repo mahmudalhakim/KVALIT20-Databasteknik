@@ -6,7 +6,7 @@
  * 
  *        A general purpose MySQL Database Class
  * 
- * Date: 2021-02-06
+ * Date: 2021-02-17
  * Developer: Mahmud Al Hakim
  * Copyright: MIT
  * 

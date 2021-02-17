@@ -6,21 +6,21 @@
 class View
 {
 
-    public function viewHeader($title)
+    public function viewHeader()
     {
         $html = <<<HTML
             <!doctype html>
             <html lang="sv">
             <head>
             <meta charset="utf-8">
-            <title>$title</title>
+            <title>Kursutvärdering</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" href="styles/bootstrap.css">
             <link rel="stylesheet" href="styles/styles.css">
             </head>
             <body class="container">
             <h1 class="text-center">
-            <a href="index.php">$title</a>
+            <a href="../index.php">Kursutvärdering</a>
             </h1>
 
 
@@ -47,7 +47,8 @@ class View
 
     public function viewCourse($course)
     {
-        echo "<h2 class='text-info'>Kurs: $course[name]</h2>";
+        if($course)
+            echo "<h2 class='text-info'>Kurs: $course[name]</h2>";
     }
 
 
@@ -85,6 +86,8 @@ class View
 
     public function viewAnswers($question, $answers)
     {
+        if(!$answers) return;
+        
         $html = "
             <h4>$question</h4>
             <table class='table table-hover'>
@@ -107,22 +110,4 @@ class View
         echo $html;
     }
 
-    /**
-     * En funktion som skriver ut ett felmeddelande
-     * $messageType enligt Bootstrap Alerts
-     * https://getbootstrap.com/docs/5.0/components/alerts/
-     */
-    public function printMessage($message, $messageType = "danger")
-    {
-        $html = <<< HTML
-
-            <div class="my-2 alert alert-$messageType">
-                $message
-            </div>
-            </div> <!-- col  avslutar Beställningsformulär -->
-
-        HTML;
-
-        echo $html;
-    }
 }

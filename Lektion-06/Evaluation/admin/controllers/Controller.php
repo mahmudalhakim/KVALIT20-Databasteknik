@@ -22,7 +22,7 @@ class Controller
 
     public function getHeader()
     {
-        $this->view->viewHeader("Kursutvärdering");
+        $this->view->viewHeader();
     }
 
     public function getFooter()

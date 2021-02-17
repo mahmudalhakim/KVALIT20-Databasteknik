@@ -2,14 +2,17 @@
 --
 -- Utveckla en databas med SQL
 --
--- Datum: 2021-01-29
+-- Datum: 2021-02-17
 -- Utvecklare: Mahmud Al Hakim
 -- Copyright: MIT
 --
 -- --------------------------------------------------------
 
 -- Skapa databasen moviedb
-CREATE DATABASE moviedb CHARACTER SET utf8 COLLATE utf8_swedish_ci;
+CREATE DATABASE moviedb 
+CHARACTER SET utf8 
+COLLATE utf8_swedish_ci;
+
 USE moviedb;
 
 -- Skapa tabellen customers

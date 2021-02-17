@@ -9,7 +9,7 @@ if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
 }
 
 if ($authenticate == false) {
-    header('WWW-Authenticate: Basic realm="Restricted Page Enter Details To Continue"');
+    header('WWW-Authenticate: Basic realm="Restricted"');
     header('HTTP/1.0 401 Unauthorized');
     echo "Authentication Failed Refresh To Do It Again";
     die();
