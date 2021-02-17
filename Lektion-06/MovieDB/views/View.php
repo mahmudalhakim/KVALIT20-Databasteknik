@@ -47,19 +47,19 @@ class View
         echo $html;
     }
 
-    public function viewFilm($film)
+    public function viewOneMovie($movie)
     {
         $html = <<<HTML
 
             <div class="col-md-6">
-                <a href="?id=$film[film_id]">
+                <a href="?id=$movie[film_id]">
                     <div class="card m-1">
-                        <img class="card-img-top" src="images/$film[image]" 
-                             alt="$film[title]">
+                        <img class="card-img-top" src="images/$movie[image]" 
+                             alt="$movie[title]">
                         <div class="card-body">
                             <div class="card-title text-center">
-                                <h4>$film[title]</h4>
-                                <h5>Pris: $film[price] kr</h5>
+                                <h4>$movie[title]</h4>
+                                <h5>Pris: $movie[price] kr</h5>
                             </div>
                         </div>
                     </div>
@@ -72,10 +72,10 @@ class View
     }
 
 
-    public function viewFilms($films)
+    public function viewAllMovies($movies)
     {
-        foreach ($films as $key => $film) {
-            $this->viewFilm($film);
+        foreach ($movies as $key => $movie) {
+            $this->viewOneMovie($movie);
         }
     }
 
@@ -83,7 +83,7 @@ class View
 
 
 
-    public function viewOrderForm($film)
+    public function viewOrderForm($movie)
     {
 
         $html = <<<HTML
@@ -93,7 +93,7 @@ class View
             
                 <form action="#" method="post">
                     <input type="hidden" name="film_id" 
-                            value="$film[film_id]">
+                            value="$movie[film_id]">
 
                     <input type="number" name="customer_id" required 
                             class="form-control form-control-lg my-2" 

@@ -20,7 +20,7 @@ class Controller
         $this->getHeader();
 
         if (!isset($_GET['id'])) {
-            $this->getFilms();
+            $this->getAllMovies();
         } else {
             $this->getOrderForm();
         }
@@ -38,10 +38,10 @@ class Controller
         $this->view->viewFooter();
     }
 
-    public function getFilms()
+    public function getAllMovies()
     {
-        $films = $this->model->fetchAllFilms();
-        $this->view->viewFilms($films);
+        $movies = $this->model->fetchAllMovies();
+        $this->view->viewAllMovies($movies);
     }
 
 
@@ -51,11 +51,11 @@ class Controller
     public function getOrderForm()
     {
         $id = $this->sanitize($_GET['id']);
-        $film = $this->model->fetchFilmById($id);
+        $movie = $this->model->fetchMovieById($id);
 
-        if ($film) {
-            $this->view->viewFilm($film);
-            $this->view->viewOrderForm($film);
+        if ($movie) {
+            $this->view->viewOneMovie($movie);
+            $this->view->viewOrderForm($movie);
         } else {
             header("Location:index.php");
         }
@@ -67,9 +67,9 @@ class Controller
 
     public function processOrderForm()
     {
-        $film_id     = $this->sanitize($_POST['film_id']);
+        $movie_id     = $this->sanitize($_POST['film_id']);
         $customer_id = $this->sanitize($_POST['customer_id']);
-        $confirm = $this->model->saveOrder($customer_id, $film_id);
+        $confirm = $this->model->saveOrder($customer_id, $movie_id);
 
         if ($confirm) {
             $customer = $confirm['customer'];

@@ -13,23 +13,23 @@ class Model
         $this->db = $database;
     }
 
-    public function fetchAllFilms()
+    public function fetchAllMovies()
     {
-        $films = $this->db->select("SELECT * FROM films");
-        return $films;
+        $movies = $this->db->select("SELECT * FROM films");
+        return $movies;
     }
     
-    public function fetchFilmById($id)
+    public function fetchMovieById($id)
     {
         $statement = "SELECT * FROM films WHERE film_id=:id";
         $parameters = array(':id' => $id);
-        $film = $this->db->select($statement, $parameters);
+        $movie = $this->db->select($statement, $parameters);
 
-        // print_r($film);
+        // print_r($movie);
 
-        if ($film) {
+        if ($movie) {
             
-            return $film[0];
+            return $movie[0];
         }
 
         return false;
@@ -51,7 +51,7 @@ class Model
     }
 
 
-    public function saveOrder($customer_id, $film_id)
+    public function saveOrder($customer_id, $movie_id)
     {
         $customer = $this->fetchCustomerById($customer_id);
 
@@ -61,7 +61,7 @@ class Model
                           VALUES (:customer_id, :film_id)";
             $parameters = array(
                 ':customer_id' => $customer_id,
-                ':film_id' => $film_id
+                ':film_id' => $movie_id
             );
 
             $lastInsertId = $this->db->insert($statement, $parameters);
