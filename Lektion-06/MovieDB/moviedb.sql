@@ -94,6 +94,8 @@ WHERE customers.customer_id = orders.customer_id
 AND films.film_id = orders.film_id;
 
 -- Skapa alias
+-- Visa info om alla kunder som har köpt filmer. 
+-- Visa ordernummer, Orderdatum, Kundnummer och Artikelnummer.
 SELECT 
 orders.order_id AS Ordernummer,
 orders.order_date AS Orderdatum,
@@ -103,12 +105,17 @@ FROM customers, films, orders
 WHERE customers.customer_id = orders.customer_id
 AND films.film_id = orders.film_id;
 
--- Vilka filmer har ”Mahmud” köpt?
-SELECT films.title
+-- Skriv ut info om order nr 1.
+-- Visa ordernummer, orderdatum, kundnamn och filmtitel.
+SELECT 
+orders.order_id AS Ordernummer,
+orders.order_date AS Orderdatum,
+customers.customer_id AS Kundnummer,
+films.titel AS Filmtitel
 FROM customers, films, orders
 WHERE customers.customer_id = orders.customer_id
-AND films.film_id = orders.film_id
-AND customers.name LIKE '%Mahmud%';
+AND films.film_id = orders.film_id;
+AND orders.order_id = 1
 
 -- Vilka kunder har köpt ”Braveheart”?
 SELECT customers.name
@@ -116,3 +123,10 @@ FROM customers, films, orders
 WHERE customers.customer_id = orders.customer_id
 AND films.film_id = orders.film_id
 AND films.title LIKE '%Braveheart%';
+
+-- Vilka filmer har "Yasmin" köpt?
+SELECT films.title
+FROM customers, films, orders
+WHERE customers.customer_id = orders.customer_id
+AND films.film_id = orders.film_id
+AND customers.name LIKE '%Yasmin%';
