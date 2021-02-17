@@ -108,14 +108,14 @@ AND films.film_id = orders.film_id;
 -- Skriv ut info om order nr 1.
 -- Visa ordernummer, orderdatum, kundnamn och filmtitel.
 SELECT 
-orders.order_id AS Ordernummer,
-orders.order_date AS Orderdatum,
-customers.customer_id AS Kundnummer,
-films.titel AS Filmtitel
+	orders.order_id AS Ordernummer,
+	orders.order_date AS Orderdatum,
+	customers.customer_id AS Kundnummer,
+	films.title AS Filmtitel
 FROM customers, films, orders
 WHERE customers.customer_id = orders.customer_id
-AND films.film_id = orders.film_id;
-AND orders.order_id = 1
+	AND films.film_id = orders.film_id
+	AND orders.order_id = 1;
 
 -- Vilka kunder har köpt ”Braveheart”?
 SELECT customers.name
