@@ -17,20 +17,38 @@ class Controller
 
     public function main()
     {
-        $this->getHeader();
+        $this->router();
+    }
 
-        if (!isset($_GET['id'])) {
-            $this->getAllMovies();
+    // My Simple Router
+    public function router()
+    {
+        if (isset($_GET['page'])) {
+            switch ($_GET['page']) {
+                case "about":
+                    $this->about();
+                    break;
+                case "order":
+                    $this->order();
+                    break;
+                default:
+                    http_response_code(404);
+                    break;
+            }
         } else {
-            $this->getOrderForm();
+            $this->getAllMovies();
         }
+    }
 
+    public function about()
+    {
+        $this->getHeader("Om Oss");
         $this->getFooter();
     }
 
-    public function getHeader()
+    public function getHeader($title)
     {
-        $this->view->viewHeader("Videobutiken");
+        $this->view->viewHeader($title);
     }
 
     public function getFooter()
@@ -40,16 +58,15 @@ class Controller
 
     public function getAllMovies()
     {
+        $this->getHeader("Välkommen");
         $movies = $this->model->fetchAllMovies();
         $this->view->viewAllMovies($movies);
+        $this->getFooter();
     }
 
-
-
-    
-
-    public function getOrderForm()
+    public function order()
     {
+        $this->getHeader("Beställningsformulär");
         $id = $this->sanitize($_GET['id']);
         $movie = $this->model->fetchMovieById($id);
 
@@ -63,6 +80,7 @@ class Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->processOrderForm();
         }
+        $this->getFooter();
     }
 
     public function processOrderForm()
@@ -79,7 +97,6 @@ class Controller
             $this->view->viewErrorMessage($customer_id);
         }
     }
-
 
     /**
      * Sanitize Inputs

@@ -13,15 +13,14 @@ class View
             <html lang="sv">
             <head>
             <meta charset="utf-8">
-            <title>$title</title>
+            <title>$title - Videobutiken</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" href="styles/bootstrap.css">
             <link rel="stylesheet" href="styles/styles.css">
             </head>
             <body class="container">
-            <h1 class="text-center">
-            <a href="index.php">$title</a>
-            </h1>
+            <h1 class="text-center"><a href="index.php">Videobutiken</a></h1>
+            <h2 class="text-center">$title</h2>
             <div class='row'>
 
         HTML;
@@ -39,6 +38,7 @@ class View
             <footer class="text-center text-muted">
             <hr>
             <p>Copyright &copy; $date</p>
+            <p> <a href="?page=about">Om Oss</a></p>
             </footer>
             </body>
             </html>
@@ -52,7 +52,7 @@ class View
         $html = <<<HTML
 
             <div class="col-md-6">
-                <a href="?id=$movie[film_id]">
+                <a href="?page=order&id=$movie[film_id]">
                     <div class="card m-1">
                         <img class="card-img-top" src="images/$movie[image]" 
                              alt="$movie[title]">
@@ -89,7 +89,6 @@ class View
         $html = <<<HTML
 
             <div class="col-md-6">
-                <h3 class='text-center text-primary'>Beställningsformulär</h3>
             
                 <form action="#" method="post">
                     <input type="hidden" name="film_id" 

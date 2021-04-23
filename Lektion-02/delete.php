@@ -10,7 +10,7 @@
 require_once ("header.php");
 require_once ("database.php");
 
-$id = $_GET['id'];
+$id = htmlspecialchars( $_GET['id'] );
 
 echo "<h2>Ta bort</h2>";
 
